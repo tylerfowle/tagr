@@ -70,7 +70,8 @@ function search() {
 # Determining Which Method To Call Based On Command Line Arguments
 case $whichMethod in
   index ) index ;;
-  * ) search ;;
+  init  ) init ;;
+  *     ) search ;;
 esac
 
 

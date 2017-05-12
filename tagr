@@ -44,7 +44,7 @@ function index() {
   # echo "" > $INDEX_FILE
 
   # reindex
-  (for i in $( tag -RNtg ); do
+  (for i in $( tag -RNtg $INDEXING_DIR); do
     for j in $( tag -f "$i" ); do
       echo "$i=$j" >> $INDEX_FILE
     done

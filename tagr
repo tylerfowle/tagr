@@ -3,12 +3,28 @@
 ################################################
 VERSION=0.1.0
 
+whichMethod=$1
 IFS=$'\n'
 
 INDEX_FILE=~/.tagr/.tagr
 INDEX=~/.tagr/.index
 INDEX_DIR=$(dirname $INDEX_FILE)
 INDEXING_DIR=~/
+
+
+
+spinner() {
+  local spin="\\|/-"
+  local i=0
+  tput civis
+  while kill -0 "$1" 2>/dev/null; do
+    i=$(( (i+1) %4 ))
+    printf "\b%s" "${spin:$i:1}"
+    sleep 0.07
+  done
+  tput cnorm
+}
+
 
 function init() {
   # create directory
@@ -17,8 +33,11 @@ function init() {
   # create file
   touch $INDEX_FILE
 }
-init()
 
+
+function dedupe() {
+  sort $INDEX_FILE | uniq > $INDEX
+}
 
 
 function index() {
@@ -26,16 +45,14 @@ function index() {
   # echo "" > $INDEX_FILE
 
   # reindex
-  for i in $( tag -RNtg ); do
+  (for i in $( tag -RNtg ); do
     for j in $( tag -f "$i" ); do
       echo "$i=$j" >> $INDEX_FILE
     done
-  done
-}
+  done) &
+  spinner $!
 
-
-function dedupe() {
-  sort $INDEX_FILE | uniq > $INDEX_DIR
+  dedupe
 }
 
 
@@ -47,10 +64,16 @@ function echo_lines() {
 }
 
 
+function search() {
+  # target_dir=echo_lines|fzf|sed "s/.*=//"
+  echo_lines
+}
+
+
 # Determining Which Method To Call Based On Command Line Arguments
 case $whichMethod in
-  index          ) index;;
-  * )
-    echo ' ERROR: invalid command '
-   ;;
+  index ) index ;;
+  * ) search ;;
 esac
+
+

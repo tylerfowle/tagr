@@ -3,6 +3,6 @@
 # tagr install script
 ######################################
 
-ln -s ./tagr /usr/local/bin
+ln -s "$PWD/tagr" /usr/local/bin
 chmod 755 /usr/local/bin/tagr
 

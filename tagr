@@ -17,6 +17,7 @@ function init() {
   # create file
   touch $INDEX_FILE
 }
+init()
 
 
 

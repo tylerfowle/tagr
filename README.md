@@ -6,7 +6,7 @@ A cli middleman for tag and fzf.
 `./install`
 
 ### Dependancies
-Since this is a middleman between tag and fzf, they are required.  Tagr wont do much without them.
+Since this is a middleman between `tag` and `fzf`, they are required.  `tagr` wont do much without them.
 
 [jdberry/tag](https://github.com/jdberry/tag)
 
@@ -15,7 +15,7 @@ Since this is a middleman between tag and fzf, they are required.  Tagr wont do 
 ### Usage
 
 #### Indexing
-`tagr index` - will make "tagr" index the current directory
+`tagr index` - will make `tagr` index the current directory
 
 #### Searching
-`. tagr` - will use `fzf` to search through 'tagr's index for directories
+`. tagr` - will use `fzf` to search through `tagr`s index for directories

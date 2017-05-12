@@ -12,7 +12,6 @@ INDEX_DIR=$(dirname $INDEX_FILE)
 INDEXING_DIR=~/
 
 
-
 spinner() {
   local spin="\\|/-"
   local i=0
@@ -41,7 +40,7 @@ function dedupe() {
 
 
 function index() {
-  # clear file
+  # empty index file
   # echo "" > $INDEX_FILE
 
   # reindex
@@ -50,23 +49,22 @@ function index() {
       echo "$i=$j" >> $INDEX_FILE
     done
   done) &
+  # show spinner while indexing
   spinner $!
-
+  # dedupe results
   dedupe
 }
 
 
 function echo_lines() {
-  file=~/.tagr/.index
-  while read l; do
-    echo $l
-  done
+  while read p; do
+    echo $p
+  done < "$INDEX"
 }
 
 
 function search() {
-  # target_dir=echo_lines|fzf|sed "s/.*=//"
-  echo_lines
+  cd $(echo_lines|fzf|sed "s/.*=//")
 }
 
 

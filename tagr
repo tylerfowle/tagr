@@ -49,9 +49,8 @@ function index() {
       echo "$i=$j" >> $INDEX_FILE
     done
   done) &
-  # show spinner while indexing
   spinner $!
-  # dedupe results
+
   dedupe
 }
 

@@ -7,7 +7,7 @@ A cli middleman for tag and fzf.
 
 ## Getting Started
 
-### Dependancies
+### Requirements
 Since this is a middleman between `tag` and `fzf`, they are required.  `tagr` wont do much without them.
 
 [jdberry/tag](https://github.com/jdberry/tag)

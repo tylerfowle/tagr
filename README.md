@@ -5,6 +5,11 @@ A cli middleman for tag and fzf.
 ### Install
 `./install`
 
+###### Optional:
+add alias for faster usage:
+
+`alias t='. tagr'`
+
 ### Dependancies
 Since this is a middleman between `tag` and `fzf`, they are required.  `tagr` wont do much without them.
 
@@ -19,9 +24,3 @@ Since this is a middleman between `tag` and `fzf`, they are required.  `tagr` wo
 
 #### Searching
 `. tagr` - will use `fzf` to search through the `tagr` index
-
-
-
-### dev notes
-tag -tgRn | fzf
-index &>/dev/null &

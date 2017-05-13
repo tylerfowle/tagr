@@ -41,7 +41,7 @@ function dedupe() {
 
 function index() {
   # empty index file
-  # echo "" > $INDEX_FILE
+  echo "" > $INDEX_FILE
 
   # reindex
   (for i in $( tag -RNtg $INDEXING_DIR); do

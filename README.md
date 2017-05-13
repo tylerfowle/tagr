@@ -18,24 +18,10 @@ Since this is a middleman between `tag` and `fzf`, they are required.  `tagr` wo
 `tagr index` - will make `tagr` index the current directory
 
 #### Searching
-`. tagr` - will use `fzf` to search through `tagr`s index for directories
+`. tagr` - will use `fzf` to search through the `tagr` index
 
 
 
-#### notes
-tag search:
+### dev notes
 tag -tgRn | fzf
-
-tag replace:
-tag -r $1 .
-nohup tagr index &>/dev/null &
-
-tag list:
-tag -l .
-
-tag find:
-tag -f $1 .
-
-tag add:
-tag -a $1 .
-nohup tagr index &>/dev/null &
+index &>/dev/null &

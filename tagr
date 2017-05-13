@@ -78,11 +78,15 @@ function remove_tag() {
   index &>/dev/null &
 }
 
+function list_tag() {
+  command tag -RNtg $indexing_dir
+}
 
 # Determining Which Method To Call Based On Command Line Arguments
 case $whichMethod in
-  index ) index ;;
   init  ) init ;;
+  index ) index ;;
+  list  ) list_tag ;;
   add   ) add_tag "$2" ;;
   remove) remove_tag "$2" ;;
   *     ) search ;;

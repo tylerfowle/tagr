@@ -4,12 +4,13 @@
 VERSION=0.1.0
 
 whichMethod=$1
+tagName=$2
 IFS=$'\n'
 
-INDEX_FILE=~/.tagr/.tagr
-INDEX=~/.tagr/.index
-INDEX_DIR=$(dirname $INDEX_FILE)
-INDEXING_DIR=~/
+index_file=~/.tagr/.tagr.tmp
+index_file_deduped=~/.tagr/.tagr
+index_file_dir=$(dirname $index_file)
+indexing_dir=~/
 
 
 spinner() {
@@ -27,26 +28,26 @@ spinner() {
 
 function init() {
   # create directory
-  mkdir -p "$INDEX_DIR"
+  mkdir -p "$index_file_dir"
 
   # create file
-  touch $INDEX_FILE
+  touch $index_file
 }
 
 
 function dedupe() {
-  sort $INDEX_FILE | uniq > $INDEX
+  sort $index_file | uniq > $index_file_deduped
 }
 
 
 function index() {
   # empty index file
-  echo "" > $INDEX_FILE
+  > $index_file
 
   # reindex
-  (for i in $( tag -RNtg $INDEXING_DIR); do
+  (for i in $( tag -RNtg $indexing_dir); do
     for j in $( tag -f "$i" ); do
-      echo "$i=$j" >> $INDEX_FILE
+      echo "$i=$j" >> $index_file
     done
   done) &
   spinner $!
@@ -58,7 +59,7 @@ function index() {
 function echo_lines() {
   while read p; do
     echo $p
-  done < "$INDEX"
+  done < "$index_file_deduped"
 }
 
 
@@ -67,10 +68,23 @@ function search() {
 }
 
 
+function add_tag() {
+  command tag -a "$1" .
+  index &>/dev/null &
+}
+
+function remove_tag() {
+  command tag -r "$1" .
+  index &>/dev/null &
+}
+
+
 # Determining Which Method To Call Based On Command Line Arguments
 case $whichMethod in
   index ) index ;;
   init  ) init ;;
+  add   ) add_tag "$2" ;;
+  remove) remove_tag "$2" ;;
   *     ) search ;;
 esac
 

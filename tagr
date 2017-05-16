@@ -47,18 +47,21 @@ function index() {
   # reindex
   (for i in $( tag -RNtg $indexing_dir); do
     for j in $( tag -f "$i" ); do
-      echo "$i=$j" >> $index_file
+      printf "tag found:\t$i\n"
+      printf "$i=$j\n" >> $index_file
     done
   done) &
   spinner $!
 
   dedupe
+
+  printf "tagr indexing complete"
 }
 
 
 function echo_lines() {
   while read p; do
-    echo $p
+    printf "$p\n"
   done < "$index_file_deduped"
 }
 
@@ -70,12 +73,14 @@ function search() {
 
 function add_tag() {
   command tag -a "$1" .
-  index &>/dev/null &
+  # index &>/dev/null &
+  printf "$1=$PWD\n" >> $index_file
+  dedupe
 }
 
 function remove_tag() {
   command tag -r "$1" .
-  index &>/dev/null &
+  # index &>/dev/null &
 }
 
 function list_tag() {
